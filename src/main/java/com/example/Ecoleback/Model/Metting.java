@@ -14,9 +14,22 @@ public class Metting {
 
     @Column(name = "time")
     private LocalTime time;
+
+
+
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "prof_id", referencedColumnName = "id")
     private Prof prof;
+
+    public Level getLevel() {
+        return level;
+    }
+
+    public void setLevel(Level level) {
+        this.level = level;
+    }
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "son_id", referencedColumnName = "id")
     private Son son;
@@ -24,16 +37,22 @@ public class Metting {
     @JoinColumn(name = "parent_id", referencedColumnName = "id")
     private Parent parent;
 
-    public Boolean getState() {
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "level_id", referencedColumnName = "id")
+    private Level level;
+
+
+
+    @Column(name = "state")
+    private MeetState state;
+
+    public MeetState getState() {
         return state;
     }
 
-    public void setState(Boolean state) {
+    public void setState(MeetState state) {
         this.state = state;
     }
-
-    @Column(name = "state")
-    private Boolean state;
 
     public Long getId() {
         return id;

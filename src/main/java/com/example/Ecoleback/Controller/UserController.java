@@ -227,6 +227,14 @@ LevelRepository levelRepository;
 
 
 }
+    @RequestMapping(value = "/get/user/{id}",method = RequestMethod.GET)
+    public  User findUser(@PathVariable Long id){
+       Optional<User>userOptional=  userRepository.findById(id);
+       User user=userOptional.get();
+       return  user ;
+
+    }
+
 
 
 
