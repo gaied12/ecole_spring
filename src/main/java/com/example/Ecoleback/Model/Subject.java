@@ -17,7 +17,7 @@ public class Subject {
     private Long id ;
     @Column(name = "name")
     private String name ;
-    @ManyToMany(mappedBy = "subject")
+    @ManyToMany
     @JsonIgnore
     private Set<Prof> profs;
 

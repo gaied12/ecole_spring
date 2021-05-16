@@ -33,6 +33,12 @@ public class TtableController {
         return  timeTable;
 
     }
+    @RequestMapping( value= "get/type/ttable/{id}",method = RequestMethod.GET)
+    public String OwnerTtable(@PathVariable Long id){
+        return ttableService.OwnerTtable(id);
+
+
+    }
 
 
 }

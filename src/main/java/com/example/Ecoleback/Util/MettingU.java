@@ -4,16 +4,8 @@ public class MettingU {
     private String date;
     private String studId;
     private Long parentId;
-    private  Long levelId;
     private  Long profId;
 
-    public Long getLevelId() {
-        return levelId;
-    }
-
-    public void setLevelId(Long levelId) {
-        this.levelId = levelId;
-    }
 
     private Integer hM;
     private Integer mM;

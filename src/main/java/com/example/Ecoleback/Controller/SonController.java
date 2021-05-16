@@ -1,10 +1,12 @@
 package com.example.Ecoleback.Controller;
 
 import com.example.Ecoleback.Model.Level;
+import com.example.Ecoleback.Model.Parent;
 import com.example.Ecoleback.Model.Son;
 import com.example.Ecoleback.Model.imageUser;
 import com.example.Ecoleback.Repository.ImageRepository;
 import com.example.Ecoleback.Repository.LevelRepository;
+import com.example.Ecoleback.Repository.ParentRepository;
 import com.example.Ecoleback.Repository.SonRepository;
 import com.example.Ecoleback.Service.ISonService;
 import com.example.Ecoleback.Util.SonU;
@@ -28,6 +30,8 @@ public class SonController {
     SonRepository sonRepository ;
     @Autowired
     LevelRepository levelRepository ;
+    @Autowired
+    ParentRepository parentRepository;
     @RequestMapping(value = "add/student",method = RequestMethod.POST)
     public Son addSon(@RequestBody SonU sonU){
        return sonService.addSon(sonU) ;
@@ -97,6 +101,16 @@ public class SonController {
         return sonRepository.save(son);
 
     }
+    @RequestMapping(value = "stud/parent",method = RequestMethod.POST)
+    public Son addSon(@RequestParam String userId,String studId){
+        Optional<Son>sonOptional=sonRepository.findById(studId);
+        Son son =sonOptional.get();
+        Optional<Parent>parentOptional=parentRepository.findById(Long.valueOf(userId));
+        son.setUser(parentOptional.get());
+      return   sonRepository.save(son);
+    }
+
+
 
 
 

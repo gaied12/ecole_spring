@@ -23,7 +23,7 @@ public class Son {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name="level_id")
     private Level level ;
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany
     @JsonIgnore
     private List<Absence> absences;
     @OneToMany(cascade = CascadeType.ALL)

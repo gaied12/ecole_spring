@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.PostConstruct;
 import java.util.EnumSet;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*", maxAge = 3600)
@@ -30,9 +31,15 @@ public class SanctionController {
     public void sancType() {
 
         for (Sanc sanc : Sanc.values()) {
+
             SancType sancType=new SancType();
             sancType.setType(Sanc.values()[sanc.ordinal()]);
-            sancRepository.save(sancType);
+            Optional<SancType>sancTypeOptional=sancRepository.findByType(Sanc.values()[sanc.ordinal()]);
+            if (!sancTypeOptional.isPresent()){
+                sancRepository.save(sancType);
+
+
+            }
 
 
 

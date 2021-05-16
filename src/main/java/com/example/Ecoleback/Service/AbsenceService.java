@@ -23,6 +23,8 @@ public class AbsenceService implements IAbsenceService {
     SonRepository sonRepository;
     @Autowired
     SubjectRepository subjectRepository;
+    @Autowired
+    IPushNotifService pushNotifService;
     @Override
     public Absence addAbs(AbsU absU) throws ParseException {
         Absence absence=new Absence();
@@ -33,6 +35,7 @@ public class AbsenceService implements IAbsenceService {
         absence.setSubject(subject.get());
         absence.setStart(LocalTime.of(absU.gethStart(),absU.getMstart()));
         absence.setEnd(LocalTime.of(absU.gethEnd(),absU.getMend()));
+        pushNotifService.sendNotifToUser("Votre Fils "+ son.get().getFirstName() + " était absent",son.get().getId());
       return   absenceRepository.save(absence);
 
 

@@ -11,4 +11,5 @@ public interface ItimeTableService {
     public Prof addTtableToUser(MultipartFile multipartFile, String idProf, String title, String desc);
     public void delTtable(Long id);
     public TimeTable getTtable(Long id );
+    public String OwnerTtable(Long id);
 }

@@ -13,15 +13,6 @@ public class User {
     private String firstName;
     @Column(name = "lastName")
     private String lastName ;
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     @Column(name = "email")
     private  String email ;
     @Column(name = "password")
@@ -32,6 +23,22 @@ public class User {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "image_id", referencedColumnName = "id")
     private imageUser imageUser ;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "device_id", referencedColumnName = "id")
+    private Device device ;
+    private Role role ;
+
+    public User() {
+
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     public Device getDevice() {
         return device;
@@ -40,12 +47,6 @@ public class User {
     public void setDevice(Device device) {
         this.device = device;
     }
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "device_id", referencedColumnName = "id")
-    private Device device ;
-
-    private Role role ;
 
     public Long getId() {
         return id;
@@ -101,10 +102,6 @@ public class User {
 
     public void setRole(Role role) {
         this.role = role;
-    }
-
-    public User() {
-
     }
 
 }

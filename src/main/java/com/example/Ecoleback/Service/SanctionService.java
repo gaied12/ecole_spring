@@ -32,7 +32,7 @@ public class SanctionService implements ISanctionService {
         Optional<Son>son=sonRepository.findById(sanctionU.getMatStud());
         sanction.setSon(son.get());
         sanction.setDescription(sanctionU.getDesc());
-        pushNotifService.sendNotifToUser("votre fils a reçu une nouvelle sanction disciplinaire",sanctionU.getMatStud());
+        pushNotifService.sendNotifToUser("votre fils "+ son.get().getFirstName()+" a reçu une nouvelle sanction disciplinaire",sanctionU.getMatStud());
 
         return sanctionRepository.save(sanction);
 

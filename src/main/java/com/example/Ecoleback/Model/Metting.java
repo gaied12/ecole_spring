@@ -18,28 +18,17 @@ public class Metting {
 
 
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "prof_id", referencedColumnName = "id")
     private Prof prof;
 
-    public Level getLevel() {
-        return level;
-    }
-
-    public void setLevel(Level level) {
-        this.level = level;
-    }
-
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "son_id", referencedColumnName = "id")
     private Son son;
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "parent_id", referencedColumnName = "id")
     private Parent parent;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "level_id", referencedColumnName = "id")
-    private Level level;
 
 
 

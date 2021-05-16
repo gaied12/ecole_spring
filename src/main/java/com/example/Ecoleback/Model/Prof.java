@@ -9,8 +9,8 @@ import java.util.Set;
 @Entity
 
 public class Prof extends  User {
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "prof_subject",
+    @ManyToMany
+    @JoinTable(name = "profs_subject",
             joinColumns = @JoinColumn(name = "prof_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "subject_id", referencedColumnName = "id"))
    private Set<Subject> subject ;
@@ -21,10 +21,7 @@ public class Prof extends  User {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "device_id", referencedColumnName = "id")
     private Device device ;
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "prof_level",
-            joinColumns = @JoinColumn(name = "prof_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "level_id", referencedColumnName = "id"))
+    @ManyToMany
     private Set<Level> level ;
 
     public Set<Level> getLevel() {

@@ -91,4 +91,23 @@ long x=level.get().getTimeTable().getId();
     public TimeTable getTtable(Long id) {
         return null;
     }
+
+    @Override
+    public String OwnerTtable(Long id) {
+        String type="";
+        Optional<Prof>prof=profRepository.findByTimeTableId(id);
+        Optional<Level>level=levelRepository.findByTimeTableId(id);
+        if (prof.isPresent()){
+            type="ENSEIGNANT";
+
+        }
+        if (level.isPresent()){
+            type="CLASSE";
+
+        }
+        return type;
+
+
+
+    }
 }

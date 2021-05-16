@@ -1,9 +1,7 @@
 package com.example.Ecoleback.Service;
 
-import com.example.Ecoleback.Model.Level;
-import com.example.Ecoleback.Model.Son;
-import com.example.Ecoleback.Repository.LevelRepository;
-import com.example.Ecoleback.Repository.SonRepository;
+import com.example.Ecoleback.Model.*;
+import com.example.Ecoleback.Repository.*;
 import com.example.Ecoleback.Util.SonU;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +17,16 @@ public class SonService implements ISonService {
     SonRepository sonRepository ;
     @Autowired
     LevelRepository levelRepository ;
+    @Autowired
+    AbsenceRepository absenceRepository;
+    @Autowired
+    CodeRepository codeRepository;
+    @Autowired
+    MettingRepository mettingRepository;
+    @Autowired
+    SanctionRepository sanctionRepository ;
+
+
     @Override
     public Son addSon(SonU sonU) {
 Level level=null ;
@@ -45,12 +53,57 @@ Level level=null ;
 
     }
     public void deletStud(String id){
-        Optional<Son> son=sonRepository.findById(id);
-       Level level= son.get().getLevel();
+        Optional<Son> sonOptional=sonRepository.findById(id);
+      List<Absence>absenceList=absenceRepository.findAllBySonId(id);
+        if (absenceList.size()!=0){
+            for(Absence s : absenceList){
+                s.getId();
+                absenceRepository.delete(s);
+
+            }
+
+
+        }
+Optional<Code>codeOptional=codeRepository.findCodeBySonId(id);
+if (codeOptional.isPresent()){
+    codeOptional.get().setSon(null);
+    codeRepository.delete(codeOptional.get());
+
+
+
+}
+List<Metting>mettingList=mettingRepository.findAllBySonId(id);
+        if (mettingList.size()!=0){
+            for(Metting m : mettingList){
+                mettingRepository.deleteById(m.getId());
+
+            }
+
+
+        }
+        List<Sanction>sanctions=sanctionRepository.findAllBySonId(id);
+        if (sanctions.size()!=0){
+            for(Sanction s : sanctions){
+                s.setType(null);
+               sanctionRepository.deleteById(s.getId());
+
+            }
+
+
+        }
+
+        Son son=sonOptional.get();
+
+       Level level= son.getLevel();
        level.setNumStud(level.getNumStud()-1);
        levelRepository.save(level);
+       son.setUser(null);
 
-        sonRepository.deleteById(son.get().getId());
+
+
+
+
+        sonRepository.delete(son);
 
     }
 

@@ -15,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.*;
 
 @RestController
@@ -48,6 +49,9 @@ LevelRepository levelRepository;
     ItimeTableService tableService;
     @Autowired
     TimeTableRepository tableRepository;
+
+    @Autowired
+    ImageRepository imageRepository;
     @RequestMapping(value = "/add/parent",method = RequestMethod.POST)
 
     public Parent addParent (@RequestBody ParentU parentu){
@@ -234,6 +238,42 @@ LevelRepository levelRepository;
        return  user ;
 
     }
+    @RequestMapping(value = "/delete/prof/{id}",method = RequestMethod.DELETE)
+    public void deleteProf (@PathVariable Long id){
+        profRepository.deleteById(id);
+    }
+    @RequestMapping(value = "/send/push/alluser",method = RequestMethod.POST)
+    public  void pushUsers(@RequestParam String msg){
+        notifService.sendNotiftoallUser(msg);
+
+
+    }
+    @RequestMapping(value = "/update/user",method = RequestMethod.POST)
+    public User updateUser(@RequestParam Long id,@RequestParam MultipartFile image,@RequestParam String fName,@RequestParam String lName,@RequestParam String pNum,@RequestParam String email) throws IOException {
+
+
+        Optional<User>userOptional=userRepository.findById(id);
+        User user=userOptional.get();
+        imageUser imagee=new imageUser();
+        imagee.setType(image.getContentType());
+        imagee.setName(image.getOriginalFilename());
+        imagee.setPicByte(image.getBytes());
+        imageRepository.save(imagee);
+
+        user.setImageUser(imagee);
+        user.setEmail(email);
+        user.setFirstName(fName);
+        user.setPhoneNum(Long.valueOf(pNum));
+        user.setLastName(lName);
+        return userRepository.save(user);
+
+    }
+
+
+
+
+
+
 
 
 

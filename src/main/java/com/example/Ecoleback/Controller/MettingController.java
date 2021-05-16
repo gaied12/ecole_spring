@@ -2,6 +2,7 @@ package com.example.Ecoleback.Controller;
 
 import com.example.Ecoleback.Model.*;
 import com.example.Ecoleback.Repository.*;
+import com.example.Ecoleback.Service.IPushNotifService;
 import com.example.Ecoleback.Util.MettingU;
 import com.example.Ecoleback.Util.SonU;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +21,11 @@ public class MettingController {
     @Autowired
     ParentRepository parentRepository;
     @Autowired
-    LevelRepository levelRepository ;
-    @Autowired
     SonRepository sonRepository;
     @Autowired
     ProfRepository profRepository;
+    @Autowired
+    IPushNotifService pushNotifService;
 
 
 
@@ -33,10 +34,8 @@ public class MettingController {
         Optional<Prof>profOptional=profRepository.findById(mettingU.getProfId());
         Optional<Parent>parentOptional=parentRepository.findById(mettingU.getParentId());
         Optional<Son>sonOptional=sonRepository.findById(mettingU.getStudId());
-        Optional<Level>levelOptional=levelRepository.findById(mettingU.getLevelId());
         Metting metting=new Metting();
         metting.setState(MeetState.PENDING);
-        metting.setLevel(levelOptional.get());
         metting.setTime(LocalTime.of(mettingU.gethM(),mettingU.getmM()));
         metting.setDate(mettingU.getDate());
         metting.setParent(parentOptional.get());
@@ -47,12 +46,6 @@ public class MettingController {
 
 
 
-    }
-    @RequestMapping(value = "all/metting/profandlevel",method = RequestMethod.GET)
-    public List<Metting>allbyProfandLevel(@RequestParam Long levelId,@RequestParam Long profId){
-
-
-        return  mettingRepository.findAllByLevelIdAndProfId(levelId,profId);
     }
     @RequestMapping(value = "all/metting/prof/{id}",method = RequestMethod.GET)
     public List<Metting>allbyProf(@PathVariable Long id){
@@ -72,6 +65,8 @@ public class MettingController {
         Metting metting=mettingOptional.get();
         metting.setState(MeetState.ACCEPTED);
         mettingRepository.save(metting);
+        pushNotifService.sendNotifToUser("votre rendez vous est confirmé",metting.getSon().getId());
+
 
         return metting ;
 
@@ -85,11 +80,28 @@ public class MettingController {
         Metting metting=mettingOptional.get();
         metting.setState(MeetState.CANCEL);
         mettingRepository.save(metting);
+
+        pushNotifService.sendNotifToUser("votre rendez vous est annulé",metting.getSon().getId());
+
         return metting ;
 
 
 
     }
+    @RequestMapping(value = "all/metting/parent",method = RequestMethod.GET)
+    public List<Metting>allbyParent(@RequestParam String parentId,@RequestParam String studId){
+
+
+        List<Metting>list= mettingRepository.findAllByParentIdAndSonId(Long.valueOf(parentId),studId);
+        int x =list.size();
+
+        return list;
+
+
+
+
+    }
+
 
 
 }

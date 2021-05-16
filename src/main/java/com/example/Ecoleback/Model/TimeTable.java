@@ -15,6 +15,11 @@ public class TimeTable implements Serializable {
     @OneToOne(mappedBy = "timeTable")
     @JsonIgnore
     private Level level;
+    @Column(name = "title")
+    private String title ;
+    @OneToOne(cascade = CascadeType.ALL,orphanRemoval = true)
+    @JoinColumn(name = "file_id", referencedColumnName = "id")
+    private File file ;
 
     public Level getLevel() {
         return level;
@@ -31,14 +36,6 @@ public class TimeTable implements Serializable {
     public void setTitle(String title) {
         this.title = title;
     }
-
-    @Column(name = "title")
-    private String title ;
-
-    @OneToOne(cascade = CascadeType.ALL,orphanRemoval = true)
-    @JoinColumn(name = "file_id", referencedColumnName = "id")
-    private File file ;
-
 
     public Long getId() {
         return id;

@@ -15,4 +15,9 @@ public class AppException extends RuntimeException {
         this.code=code;
 
     }
+    @Override
+    public synchronized Throwable fillInStackTrace() {
+        return this;
+    }
+
 }

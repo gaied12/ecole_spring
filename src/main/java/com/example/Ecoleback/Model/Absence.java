@@ -18,7 +18,7 @@ public class Absence {
     private LocalTime start;
     @Column(name = "end")
     private LocalTime end;
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "subject_id", referencedColumnName = "id")
     private Subject subject;
 
@@ -30,8 +30,8 @@ public class Absence {
         this.son = son;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name="sons_id")
+    @ManyToOne
+    @JoinColumn(name="sons_id",nullable = true)
     private Son son ;
 
     public Subject getSubject() {

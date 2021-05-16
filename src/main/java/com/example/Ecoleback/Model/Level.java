@@ -1,6 +1,7 @@
 package com.example.Ecoleback.Model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.util.List;
@@ -21,7 +22,7 @@ public class Level {
     public void setNumStud(Integer numStud) {
         this.numStud = numStud;
     }
-    @OneToMany( cascade = CascadeType.ALL)
+    @OneToMany
     @JsonIgnore
     private List<Son> sons ;
     @OneToMany( cascade = CascadeType.ALL)
@@ -29,10 +30,13 @@ public class Level {
     private List<NotifInfo> notes;
     @Column(name = "student_number")
     private  Integer numStud ;
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL,orphanRemoval = true)
     @JoinColumn(name = "time_table_id", referencedColumnName = "id")
     private TimeTable timeTable;
     @ManyToMany
+    @JoinTable(name = "users_level",
+            joinColumns = @JoinColumn(name = "level_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name ="prof_id" , referencedColumnName = "id"))
     @JsonIgnore
     private Set<Prof> profs;
 

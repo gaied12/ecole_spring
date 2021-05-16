@@ -8,6 +8,11 @@ import java.util.List;
 public interface AbsenceRepository extends JpaRepository<Absence,Long> {
     List<Absence>findAllBySonIdOrderByDateDesc(String id);
     List<Absence>findAllBySonIdAndDateOrderByIdDesc(String id,String date);
+    List<Absence>findAllBySonId(String id);
+
+
+    void deleteById(Long id);
+
 
 
 }
