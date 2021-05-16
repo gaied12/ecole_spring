@@ -75,7 +75,7 @@ LevelRepository levelRepository;
         }
 
 
-        if (son.isEmpty()){
+        if (!son.isPresent()){
             throw new AppException("student Not exist","99");
         }else{
            parent= userRepository.save(parent);
@@ -116,7 +116,7 @@ LevelRepository levelRepository;
         Son son=null ;
         User user =null ;
         Optional<Son>son1=sonRepository.findById(idStudent);
-        if (son1.isEmpty()){
+        if (!son1.isPresent()){
 
             throw new AppException("student Not exist","99");
         }

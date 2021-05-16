@@ -34,7 +34,7 @@ public class LoginService  implements  ILoginService{
         Code code=null ;
 
         Optional<Code>codeOptional=codeRepository.findCodeBySonId(idStud);
-        if (codeOptional.isEmpty()){
+        if (!codeOptional.isPresent()){
             code=new Code();
             code.setCode(key);
             Optional<Son>sonOptional=sonRepository.findById(idStud);
@@ -43,7 +43,7 @@ public class LoginService  implements  ILoginService{
 
 
         }
-        if (!codeOptional.isEmpty()){
+        if (codeOptional.isPresent()){
             code=codeOptional.get();
             code.setCode(key);
             code=codeRepository.save(code);

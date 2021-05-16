@@ -14,6 +14,8 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 
 public class EcoleBackApplication {
+	 /*   ZonedDateTime now = ZonedDateTime.of(LocalDateTime.of(2021,01,01,13,00), ZoneId.systemDefault());
+        System.out.printf("Week %d%n", now.get(IsoFields.WEEK_OF_WEEK_BASED_YEAR));*/
 
 	public static void main(String[] args) {
 		SpringApplication.run(EcoleBackApplication.class, args);

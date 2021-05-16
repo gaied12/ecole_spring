@@ -67,10 +67,10 @@ public class SonController {
     public Boolean verfStudent (@PathVariable String idStud) {
         Boolean x=false;
         Optional<Son>sonOptional=sonRepository.findById(idStud);
-        if(!sonOptional.isEmpty()){
+        if(sonOptional.isPresent()){
             x=true;
         }
-        if (sonOptional.isEmpty()){
+        if (!sonOptional.isPresent()){
             x=false;
 
         }
