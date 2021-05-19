@@ -65,6 +65,7 @@ LevelRepository levelRepository;
         Optional<Son>son=sonRepository.findById(parentu.getMatStud());
         Optional<Code> codeOptional=codeRepository.findCodeBySonId(parentu.getMatStud());
         Long x=codeOptional.get().getCode();
+
         Long y=Long.valueOf(parentu.getCode());
 
         if (x.equals(y)==false){

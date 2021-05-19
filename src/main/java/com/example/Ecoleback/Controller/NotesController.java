@@ -1,9 +1,6 @@
 package com.example.Ecoleback.Controller;
 
-import com.example.Ecoleback.Model.File;
-import com.example.Ecoleback.Model.Level;
-import com.example.Ecoleback.Model.NotifInfo;
-import com.example.Ecoleback.Model.imageUser;
+import com.example.Ecoleback.Model.*;
 import com.example.Ecoleback.Repository.FileRepository;
 import com.example.Ecoleback.Repository.ImageRepository;
 import com.example.Ecoleback.Repository.LevelRepository;
@@ -46,7 +43,7 @@ public class NotesController {
         if (type.contentEquals("c")) {
 
             for (int i = 0; i < levelsId.size(); i++) {
-                NotifInfo note = new NotifInfo();
+              Event note = new Event();
 
 
                 Optional<Level> level = levelRepository.findById(Long.valueOf(levelsId.get(i)));
@@ -81,7 +78,7 @@ public class NotesController {
                 image.setType(file.getContentType());
                 image.setName(file.getOriginalFilename());
                 image.setPicByte(file.getBytes());
-                NotifInfo note=new NotifInfo();
+                Event  note=new Event();
                 note.setDateCreation(new Date());
                 note.setDate(Date);
 
@@ -119,12 +116,12 @@ public class NotesController {
 
     }
     @RequestMapping(value = "get/note/level/{idLevel}",method = RequestMethod.GET)
-    public List<NotifInfo>getNotesByLevel(@PathVariable Long idLevel){
+    public List<Event>getNotesByLevel(@PathVariable Long idLevel){
         return notesRepository.findAllByLevelIdOrderByIdDesc(idLevel);
 
     }
     @RequestMapping(value = "/note/{id}",method = RequestMethod.GET)
-    public NotifInfo getNote(@PathVariable Long id){
+    public Event getNote(@PathVariable Long id){
         return notesRepository.findById(id).get();
 
     }
@@ -133,8 +130,8 @@ public class NotesController {
         notesRepository.deleteById(id);
     }
     @RequestMapping(value = "update/note/{id}",method = RequestMethod.PUT)
-    public NotifInfo updateNote(@PathVariable Long id,@RequestParam (required = false) MultipartFile file,@RequestParam String title,@RequestParam String desc ) throws IOException {
-       NotifInfo notifInfo =notesRepository.findById(id).get();
+    public Event updateNote(@PathVariable Long id,@RequestParam (required = false) MultipartFile file,@RequestParam String title,@RequestParam String desc ) throws IOException {
+       Event notifInfo =notesRepository.findById(id).get();
         Date date=new Date();
 
         notifInfo.setDateCreation(date);
@@ -173,21 +170,21 @@ if(notifInfo.getType().equals("Evénement")){
 
     }
     @RequestMapping(value = "get/note/date",method = RequestMethod.GET)
-    public List<NotifInfo>allNotes(@RequestParam String date){
+    public List<Event>allNotes(@RequestParam String date){
         return notesRepository.findAllByDate(date);
     }
 
 
 
     @RequestMapping(value = "get/all/note",method = RequestMethod.GET)
-    public List<NotifInfo>allNotess(){
+    public List<Event>allNotess(){
         return notesRepository.findAllDate();
     }
 
 
 
     @RequestMapping(value = "all/event",method = RequestMethod.GET)
-    public List<NotifInfo>allEvent(){
+    public List<Event>allEvent(){
 String type="Evénement";
         return notesRepository.findAllByTypeOrderByIdDesc(type);
     }

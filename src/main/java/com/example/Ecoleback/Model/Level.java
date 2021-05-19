@@ -27,7 +27,7 @@ public class Level {
     private List<Son> sons ;
     @OneToMany( cascade = CascadeType.ALL)
     @JsonIgnore
-    private List<NotifInfo> notes;
+    private List<Event> events;
     @Column(name = "student_number")
     private  Integer numStud ;
     @OneToOne(cascade = CascadeType.ALL,orphanRemoval = true)
@@ -45,16 +45,16 @@ public class Level {
         return profs;
     }
 
+    public List<Event> getEvents() {
+        return events;
+    }
+
+    public void setEvents(List<Event> events) {
+        this.events = events;
+    }
+
     public void setProfs(Set<Prof> profs) {
         this.profs = profs;
-    }
-
-    public List<NotifInfo> getNotes() {
-        return notes;
-    }
-
-    public void setNotes(List<NotifInfo> notes) {
-        this.notes = notes;
     }
 
     public TimeTable getTimeTable() {

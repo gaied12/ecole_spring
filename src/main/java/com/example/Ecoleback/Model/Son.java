@@ -29,7 +29,9 @@ public class Son {
     @OneToMany(cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Sanction> sanctions;
-
+    @OneToMany(cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Result> results;
 
     @Column(name = "sexe")
     private String sexe ;
