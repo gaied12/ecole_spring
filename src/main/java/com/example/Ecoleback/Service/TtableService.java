@@ -74,14 +74,14 @@ public class TtableService implements ItimeTableService {
 
     @Override
     public void delTtable(Long id) {
+        tableRepository.deleteById(id);
 
-      Optional<Level> level= levelRepository.findByTimeTableId(id);
+        Optional<Level> level= levelRepository.findByTimeTableId(id);
 long x=level.get().getTimeTable().getId();
         level.get().setTimeTable(null);
         Level Llevel=level.get();
         levelRepository.save(Llevel);
 
-        tableRepository.deleteById(id);
 
 
 
